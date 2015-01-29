@@ -24,8 +24,8 @@ function makeURL(query) {
     return url;
 }
 
-var serve = static("public");
-app.use("/", serve);
+var serve = static("public", {default: "index.html"});
+
 app.use("/", function (req, res, next) {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
@@ -33,6 +33,7 @@ app.use("/", function (req, res, next) {
     // Minimally, need the owner, repo & sha to identify a public commit on GitHub
     // TODO: for private repos, maybe just redirect the user, open an iframe?
     if (has(query, ["owner", "repo", "sha"])) {
+        // TODO: use the github module instead
         return request({
             url: makeURL(query),
             headers: {
@@ -47,16 +48,23 @@ app.use("/", function (req, res, next) {
             }
             else {
                 console.log(response.statusCode, body);
+                // Got an error; TODO: error handling to browser
+                next();
             }
 
         });
     }
     else {
-        res.end(JSON.stringify(query));
+        next();
     }
 });
+app.use(serve);
 
+app.use(function(req, res, next){
+    res.writeHead(301, {
+      'Location': '/'
+    });
+    res.end();
+});
 
-
-var server = http.createServer(app);
-server.listen(5000);
+http.createServer(app).listen(process.env.PORT || 5000);

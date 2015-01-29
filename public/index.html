@@ -2,32 +2,76 @@
 <html>
 <head>
     <title>Who Did Git?</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A tool for investigating GitHub commits with unknown authors">
+    <meta name="author" content="Shakeel Mohamed">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Who Did Git?</h1>
-    <div>
-        Do an HTTP request on this domain with the following parameters:
-        <ul>
-            <li>owner (the GitHub repository owner or organization)</li>
-            <li>repo (the name of the GitHub repository)</li>
-            <li>sha (the sha of the individual GitHub commit</li>
-        </ul>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><b>
+                        <a href="http://github.com/shakeelmohamed/whodidgit">View on GitHub</a>
+                        </b>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Who Did Git?</h3>
+        </div>
         <br>
-        And we'll give you some JSON from the GitHub API about the author of that commit.
-    </div>
-    <div>
-        Here's an example:
-        <br>
-        <pre>
-            ?owner=splunk&amp;repo=splunk-sdk-java&amp;sha=94894b1c63a2388aed097e96c0253585f474c1ae
-        </pre>
-        Which would return:
-        <br>
-        <pre>
-            GitHub gave us this information about the author of that commit:
-            <br>
-            {"name":"Shakeel Mohamed","email":"smohamed@splunk.com","date":"2015-01-29T00:39:01Z"}
-        </pre>
-    </div>
+        <div class="jumbotron">
+            <h1>Who Did Git?</h1>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="lead">
+                        Sometimes commits show up with an unknown author.
+                        <br>
+                        This tool helps you investigate the the problem!
+                    </p>
+                    <img src="screenshot.png">
+                </div>
+                <div class="col-lg-6">
+                    <h4> Try it with this form!</h4>
+                    <form action="/">
+                        <div class="form-group">
+                            <input name="owner" placeholder="Owner" class="form-control"><br>
+                            <input name="repo" placeholder="Repo" class="form-control"><br>
+                            <input name="sha" placeholder="Sha" class="form-control"><br>
+                            <input type="submit" class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>Do an HTTP request on this domain with the following parameters:</h4>
+                <ul>
+                    <li>owner (the GitHub repository owner or organization)</li>
+                    <li>repo (the name of a public GitHub repository)</li>
+                    <li>sha (the sha of the individual GitHub commit</li>
+                </ul>
+                <br>
+                <p>And we'll give you some JSON from the GitHub API about the author of that commit.</p>
+                <br>
+            </div>
+            <div class="col-lg-6">
+                <h4>Here's an example:</h4>
+                <pre>
+?owner=shakeelmohamed&amp;repo=whodidgit&amp;sha=c977b473efb8d1fa3bede0171b005bb4c00c1561
+                </pre>
+                <h4>Which would return:</h4>
+                <pre>
+GitHub gave us this information about the author of that commit: 
+
+{"name":"unknown","email":"Shakeel@Example.com","date":"2015-01-29T08:32:42Z"}
+                </pre>
+            </div>
+        </div>
+    </div> <!-- /container -->
 </body>
 </html>
