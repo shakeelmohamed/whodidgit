@@ -2,32 +2,72 @@
 <html>
 <head>
     <title>Who Did Git?</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A tool for investigating GitHub commits with unknown authors">
+    <meta name="author" content="Shakeel Mohamed">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Who Did Git?</h1>
-    <div>
-        Do an HTTP request on this domain with the following parameters:
-        <ul>
-            <li>owner (the GitHub repository owner or organization)</li>
-            <li>repo (the name of the GitHub repository)</li>
-            <li>sha (the sha of the individual GitHub commit</li>
-        </ul>
+    <div class="container">
         <br>
-        And we'll give you some JSON from the GitHub API about the author of that commit.
-    </div>
-    <div>
-        Here's an example:
-        <br>
-        <pre>
-            ?owner=splunk&amp;repo=splunk-sdk-java&amp;sha=94894b1c63a2388aed097e96c0253585f474c1ae
-        </pre>
-        Which would return:
-        <br>
-        <pre>
-            GitHub gave us this information about the author of that commit:
+        <div class="jumbotron">
+            <h4 class="text-center">
+                <a href="http://github.com/shakeelmohamed/whodidgit">
+                    View on GitHub &nbsp;
+                    <img src="GitHub-Mark-32px.png" alt="GitHub logo">
+                </a>
+            </h3>
+            <h1>Who Did Git?</h1>
             <br>
-            {"name":"Shakeel Mohamed","email":"smohamed@splunk.com","date":"2015-01-29T00:39:01Z"}
-        </pre>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="lead">
+                        <img src="screenshot.png" alt="Screenshot of commit with unknown author">
+                        <br>
+                        Sometimes commits show up with an unknown author, like above.
+                        <br>
+                        This tool helps you investigate the the problem!
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <h4> Try it with this form!</h4>
+                    <form action="/">
+                        <div class="form-group">
+                            <input name="owner" placeholder="Owner (ex: shakeelmohamed)" class="form-control"><br>
+                            <input name="repo" placeholder="Repo (ex: whodidgit)" class="form-control"><br>
+                            <input name="sha" placeholder="Sha (ex:c977b473efb8d1fa3bede0171b005bb4c00c1561)" class="form-control"><br>
+                            <input type="submit" class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>Do an HTTP request on this domain with the following parameters:</h4>
+                <ul>
+                    <li>owner (the GitHub repository owner or organization)</li>
+                    <li>repo (the name of a public GitHub repository)</li>
+                    <li>sha (the sha of the individual GitHub commit)</li>
+                    <li>token (optional. a GitHub access token for private repos or increased API limits)</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <h4><a href="?owner=shakeelmohamed&amp;repo=whodidgit&amp;sha=c977b473efb8d1fa3bede0171b005bb4c00c1561">Here's an example:</a></h4>
+                <pre>
+GitHub gave us the following information about the author of that commit: 
+{
+    "name": "unknown",
+    "email": "Shakeel@Example.com",
+    "date": "2015-01-29T08:32:42Z"
+}
+
+54 of 60 requests remaining this hour.
+                </pre>
+            </div>
+        </div>
     </div>
 </body>
 </html>

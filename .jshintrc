@@ -1,0 +1,11 @@
+{
+    "curly": true,
+    "indent": 4,
+    "loopfunc": true,
+    "newcap": true,
+    "node": true,
+    "quotmark": "double",
+    "trailing": true,
+    "unused": true,
+    "white": true
+}

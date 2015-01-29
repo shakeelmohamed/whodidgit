@@ -5,23 +5,37 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git@heroku.com:whodidgit.git"
+    "url": "git@github.com:shakeelmohamed/whodidgit.git"
   },
+  "bugs": "http://github.com/shakeelmohamed/whodidgit/issues",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "keywords": [
     "git",
     "github",
     "commits"
   ],
-  "author": "Shakeel Mohamed",
-  "license": "MIT",
+  "author": {
+    "name": "Shakeel Mohamed",
+    "email": "Contact@ShakeelMohamed.com",
+    "url": "https://github.com/shakeelmohamed"
+  },
   "dependencies": {
     "github": "~0.2.3",
     "connect": "~3.3.4",
     "finalhandler": "~0.3.3",
     "serve-static": "~1.8.1",
-    "request": "~2.51.0"
-  }
+    "request": "~2.51.0",
+    "body-parser": "~1.11.0"
+  },
+  "homepage": "http://whodidgit.herokuapp.com",
+  "devDependencies": {
+    "jshint": "*"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "license": "MIT"
 }

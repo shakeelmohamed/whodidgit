@@ -1,62 +1,85 @@
+var package = require("./package.json");
+var utils = require("./utils");
 var http = require("http");
 var connect = require("connect");
+var bodyparser = require("body-parser");
 var static = require("serve-static");
 var url = require("url");
-var request = require("request")
+var GitHubAPI = require("github");
+
+var USERAGENT = "who-did-git/" + package.version;
+var GitHub = new GitHubAPI({
+        version: "3.0.0",
+        headers: {
+            "user-agent": USERAGENT
+        }
+    }
+);
 
 var app = connect();
+app.use(bodyparser.urlencoded({extended:false}));
 
-function has(obj, props) {
-    var result = true;
-    for(var i = 0; i < props.length && result; i++) {
-        result = obj.hasOwnProperty(props[i]);
-    }
-    return result;
-}
-
-function makeURL(query) {
-    var url = "https://api.github.com/repos/";
-    url += query.owner;
-    url += "/";
-    url += query.repo;
-    url += "/commits/";
-    url += query.sha;
-    return url;
-}
-
-var serve = static("public");
-app.use("/", serve);
 app.use("/", function (req, res, next) {
     var url_parts = url.parse(req.url, true);
-    var query = url_parts.query;
+    var queryArgs = url_parts.query;
+    
+    // Get the request body if it's an HTTP POST
+    if (req.method === "POST") {
+        queryArgs = req.body;
+    }
 
-    // Minimally, need the owner, repo & sha to identify a public commit on GitHub
-    // TODO: for private repos, maybe just redirect the user, open an iframe?
-    if (has(query, ["owner", "repo", "sha"])) {
-        return request({
-            url: makeURL(query),
-            headers: {
-                "Accept": "application/vnd.github.v3+json",
-                "User-Agent": "who-did-git"
-            },
-            json: true
-        }, function (error, response, body) {
-            if (!error && response.statusCode === 200 && has(body, ["commit"])) {
-                console.log(body);
-                res.end("GitHub gave us this information about the author of that commit: \n\n" + JSON.stringify(body.commit.author)); // Print the json response
-            }
-            else {
-                console.log(response.statusCode, body);
-            }
-
+    // Check query string for a GitHub token
+    if (utils.has(queryArgs, "token")) {
+        GitHub.authenticate({
+            type: "oauth",
+            token: token
         });
     }
-    else {
-        res.end(JSON.stringify(query));
+    
+    try {
+        // Validate params first
+        var GitHubParams = utils.makeParams(queryArgs);
+        return GitHub.repos.getCommit(GitHubParams, function(err, response) {
+            if (err) {
+                next(new Error(err));
+            }
+            else if (utils.has(response, "message")) {
+                // Assume there's an error
+                next(new Error(response.message));
+            }
+            else {
+                res.end(
+                    "GitHub gave us the following information about the author of that commit: \n" +
+                    JSON.stringify(response.commit.author, undefined, 4) + "\n\n" +
+                    response.meta["x-ratelimit-remaining"] + " of " +
+                        response.meta["x-ratelimit-limit"] + " requests remaining this hour.\n"
+                );
+            }
+        });
+    }
+    catch (e) {
+        if (utils.has(e, "message") && !utils.isEmpty(queryArgs)) {
+            next(e.message);
+        }
+        else if (req.method === "POST") {
+            next("Invalid parameters.");
+        }
+        else {
+            next();
+        }
     }
 });
 
+// Serve the static home page
+var serve = static("public", {default: "index.html"});
+app.use(serve);
 
+// Catch all unhandled requests, send them to the home page
+app.use(function(req, res) {
+    res.writeHead(301, {
+      "Location": "/"
+    });
+    res.end();
+});
 
-var server = http.createServer(app);
-server.listen(5000);
+http.createServer(app).listen(process.env.PORT || 5000);
