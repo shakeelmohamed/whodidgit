@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Who Did Git?</title>
+</head>
+<body>
+    <h1>Who Did Git?</h1>
+    <div>
+        Do an HTTP request on this domain with the following parameters:
+        <ul>
+            <li>owner (the GitHub repository owner or organization)</li>
+            <li>repo (the name of the GitHub repository)</li>
+            <li>sha (the sha of the individual GitHub commit</li>
+        </ul>
+        <br>
+        And we'll give you some JSON from the GitHub API about the author of that commit.
+    </div>
+    <div>
+        Here's an example:
+        <br>
+        <pre>
+            ?owner=splunk&amp;repo=splunk-sdk-java&amp;sha=94894b1c63a2388aed097e96c0253585f474c1ae
+        </pre>
+        Which would return:
+        <br>
+        <pre>
+            GitHub gave us this information about the author of that commit:
+            <br>
+            {"name":"Shakeel Mohamed","email":"smohamed@splunk.com","date":"2015-01-29T00:39:01Z"}
+        </pre>
+    </div>
+</body>
+</html>

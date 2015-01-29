@@ -1,0 +1,27 @@
+{
+  "name": "whodidgit",
+  "version": "0.0.1",
+  "description": "Tells you who made a GitHub commit",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:whodidgit.git"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "commits"
+  ],
+  "author": "Shakeel Mohamed",
+  "license": "MIT",
+  "dependencies": {
+    "github": "~0.2.3",
+    "connect": "~3.3.4",
+    "finalhandler": "~0.3.3",
+    "serve-static": "~1.8.1",
+    "request": "~2.51.0"
+  }
+}
