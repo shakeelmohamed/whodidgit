@@ -4,7 +4,7 @@ Figure out who the committed that unknown commit!
 
 ## This sucks
 
-![Screenshot of commit without unknown authoer](public/screenshot.png)
+![Screenshot of commit with unknown author](public/screenshot.png)
 
 ## Let's fix it
 

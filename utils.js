@@ -27,4 +27,13 @@ utils.makeParams = function (query) {
     }
 };
 
+utils.isEmpty = function(obj) {
+    for(var a in obj) {
+        if (has(obj, a)) {
+            return false;
+        }
+    }
+    return true;
+};
+
 module.exports = utils;

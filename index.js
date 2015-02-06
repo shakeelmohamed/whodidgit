@@ -34,7 +34,7 @@ app.use("/", function (req, res, next) {
         var GitHubParams = utils.makeParams(queryArgs);
         return GitHub.repos.getCommit(GitHubParams, function(err, response) {
             if (err) {
-                next(err);
+                next(new Error(err));
             }
             else if (utils.has(response, "message")) {
                 // Assume there's an error
@@ -51,7 +51,7 @@ app.use("/", function (req, res, next) {
         });
     }
     catch (e) {
-        if (e && utils.has(e, "message")) {
+        if (e && utils.has(e, "message") && !utils.isEmpty(queryArgs)) {
             next(e.message);
         }
         else {
@@ -61,7 +61,8 @@ app.use("/", function (req, res, next) {
 });
 
 // Serve the static home page
-app.use(static("public", {default: "index.html"}));
+var serve = static("public", {default: "index.html"});
+app.use(serve);
 
 // Catch all unhandled requests, send them to the home page
 app.use(function(req, res) {
