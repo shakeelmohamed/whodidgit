@@ -9,7 +9,8 @@
   },
   "bugs": "http://github.com/shakeelmohamed/whodidgit/issues",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "keywords": [
     "git",
@@ -26,7 +27,8 @@
     "connect": "~3.3.4",
     "finalhandler": "~0.3.3",
     "serve-static": "~1.8.1",
-    "request": "~2.51.0"
+    "request": "~2.51.0",
+    "body-parser": "~1.11.0"
   },
   "homepage": "http://whodidgit.herokuapp.com",
   "devDependencies": {

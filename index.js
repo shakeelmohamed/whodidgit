@@ -2,6 +2,7 @@ var package = require("./package.json");
 var utils = require("./utils");
 var http = require("http");
 var connect = require("connect");
+var bodyparser = require("body-parser");
 var static = require("serve-static");
 var url = require("url");
 var GitHubAPI = require("github");
@@ -16,10 +17,16 @@ var GitHub = new GitHubAPI({
 );
 
 var app = connect();
+app.use(bodyparser.urlencoded({extended:false}));
 
 app.use("/", function (req, res, next) {
     var url_parts = url.parse(req.url, true);
     var queryArgs = url_parts.query;
+    
+    // Get the request body if it's an HTTP POST
+    if (req.method === "POST") {
+        queryArgs = req.body;
+    }
 
     // Check query string for a GitHub token
     if (utils.has(queryArgs, "token")) {
@@ -51,8 +58,11 @@ app.use("/", function (req, res, next) {
         });
     }
     catch (e) {
-        if (e && utils.has(e, "message") && !utils.isEmpty(queryArgs)) {
+        if (utils.has(e, "message") && !utils.isEmpty(queryArgs)) {
             next(e.message);
+        }
+        else if (req.method === "POST") {
+            next("Invalid parameters.");
         }
         else {
             next();
