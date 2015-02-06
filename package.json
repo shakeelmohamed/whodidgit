@@ -23,5 +23,8 @@
     "finalhandler": "~0.3.3",
     "serve-static": "~1.8.1",
     "request": "~2.51.0"
+  },
+  "devDependencies": {
+    "jshint": "*"
   }
 }
