@@ -15,7 +15,7 @@ A very simple node.js server that uses the GitHub API to get author information 
 curl "http://whodidgit.herokuapp.com?owner=shakeelmohamed&repo=whodidgit&sha=1bd2afcab1"
 ```
 
-The above will return something like:
+The above will return something like (looks like Shakeel needs a lesson in git):
 
 ```json
 GitHub gave us the following information about the author of that commit:
@@ -27,6 +27,10 @@ GitHub gave us the following information about the author of that commit:
 
 59 of 60 requests remaining this hour.
 ```
+
+## How did that happen?
+
+Git will default your email address to be <local_system_user_name>@<system_name>.local
 
 ## How can I prevent this from happening?
 
