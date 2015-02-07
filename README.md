@@ -1,12 +1,11 @@
-# whodidgit
-Who did git?
+# Who Did Git?
 Figure out who the made that unknown commit!
 
 ## This sucks
 
 ![Screenshot of commit with unknown author](public/screenshot.png)
 
-## Who Did Git?
+## So, what is this?
 
 A very simple node.js server that uses the GitHub API to get author information about a specific commit.
 
