@@ -12,7 +12,7 @@ var url = scheme + "://" + domain + ":" + port;
 
 var testUser = "shakeelmohamed";
 var testRepo = "whodidgit";
-var testCommit = "c977b473efb8d1fa3bede0171b005bb4c00c1561"; // FIXME: update with a new commit
+var testCommit = "1bd2afcab116e647db471a983a8b874fb341a9c7";
 
 describe("Home page", function() {
     describe("HTTP GET - no args", function() {
