@@ -40,5 +40,5 @@ Run the following commands when you setup git on a new machine:
 
 ```shell
 git config --global user.name "Your Name"
-git config --global user.name "Your@email.com" # Preferably your GitHub email address
+git config --global user.email "Your@email.com" # Preferably your GitHub email address
 ```
